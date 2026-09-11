@@ -15,10 +15,12 @@ def encrypt(text, rails):
     direction = 1
 
     for char in text:
+
         fence[row] += char
 
         if row == 0:
             direction = 1
+
         elif row == rails - 1:
             direction = -1
 
@@ -32,6 +34,7 @@ def decrypt(cipher, rails):
 
     if rails == 1:
         return cipher
+
 
     pattern = list(range(rails)) + list(range(rails-2, 0, -1))
 
@@ -52,10 +55,13 @@ def decrypt(cipher, rails):
     posisi = 0
 
     for jumlah in rail_count:
+
         rails_text.append(
             list(cipher[posisi:posisi+jumlah])
         )
+
         posisi += jumlah
+
 
 
     hasil = ""
@@ -73,9 +79,7 @@ def decrypt(cipher, rails):
     return hasil
 
 
-
 # BUTTON FUNCTION
-
 
 def proses_enkripsi():
 
@@ -86,9 +90,21 @@ def proses_enkripsi():
         rail = int(input_rail.get())
 
 
+        if rail < 2:
+
+            messagebox.showwarning(
+                "Peringatan",
+                "Jumlah rail minimal 2"
+            )
+
+            return
+
+
         hasil = encrypt(pesan, rail)
 
+
         output.delete(0, tk.END)
+
         output.insert(0, hasil)
 
 
@@ -110,9 +126,21 @@ def proses_dekripsi():
         rail = int(input_rail.get())
 
 
+        if rail < 2:
+
+            messagebox.showwarning(
+                "Peringatan",
+                "Jumlah rail minimal 2"
+            )
+
+            return
+
+
         hasil = decrypt(pesan, rail)
 
+
         output.delete(0, tk.END)
+
         output.insert(0, hasil)
 
 
@@ -128,23 +156,26 @@ def proses_dekripsi():
 def reset():
 
     input_pesan.delete(0, tk.END)
-    input_rail.delete(0, tk.END)
-    output.delete(0, tk.END)
 
+    input_rail.delete(0, tk.END)
+
+    output.delete(0, tk.END)
 
 
 # GUI DESIGN
 
-
 window = tk.Tk()
+
 
 window.title(
     "Aplikasi Zig-Zag Cipher"
 )
 
+
 window.geometry(
     "650x600"
 )
+
 
 window.configure(
     bg="#D9EEFF"
@@ -152,14 +183,20 @@ window.configure(
 
 
 
-# Judul
+# JUDUL
 
 judul = tk.Label(
+
     window,
+
     text="🔐 ZIG-ZAG CIPHER",
+
     font=("Segoe UI", 26, "bold"),
+
     bg="#D9EEFF",
+
     fg="#0B3D91"
+
 )
 
 judul.pack(pady=25)
@@ -167,11 +204,17 @@ judul.pack(pady=25)
 
 
 subjudul = tk.Label(
+
     window,
+
     text="Classical Cryptography - Rail Fence Cipher",
+
     font=("Segoe UI", 12),
+
     bg="#D9EEFF",
+
     fg="#444"
+
 )
 
 subjudul.pack()
@@ -181,53 +224,77 @@ subjudul.pack()
 # CARD UTAMA
 
 card = tk.Frame(
+
     window,
+
     bg="white",
+
     padx=35,
+
     pady=30
+
 )
 
-card.pack(
-    pady=30
-)
+card.pack(pady=30)
 
 
 
 # INPUT PESAN
 
 tk.Label(
+
     card,
+
     text="Masukkan Pesan",
+
     font=("Segoe UI", 12, "bold"),
+
     bg="white"
+
 ).pack()
 
 
+
 input_pesan = tk.Entry(
+
     card,
+
     width=45,
+
     font=("Segoe UI", 12)
+
 )
 
 input_pesan.pack(pady=10)
 
 
 
-# RAIL
+# INPUT RAIL
 
 tk.Label(
+
     card,
+
     text="Jumlah Rail / Key",
+
     font=("Segoe UI", 12, "bold"),
+
     bg="white"
+
 ).pack()
 
 
+
 input_rail = tk.Entry(
+
     card,
+
     width=15,
+
     justify="center",
+
     font=("Segoe UI", 12)
+
 )
 
 input_rail.pack(pady=10)
@@ -237,8 +304,11 @@ input_rail.pack(pady=10)
 # BUTTON
 
 button_frame = tk.Frame(
+
     card,
+
     bg="white"
+
 )
 
 button_frame.pack(pady=20)
@@ -246,58 +316,97 @@ button_frame.pack(pady=20)
 
 
 btn_encrypt = tk.Button(
+
     button_frame,
+
     text="🔒 ENKRIPSI",
+
     width=14,
+
     height=2,
+
     bg="#1976D2",
+
     fg="white",
+
     font=("Segoe UI",10,"bold"),
+
     command=proses_enkripsi
+
 )
 
 btn_encrypt.grid(
+
     row=0,
+
     column=0,
+
     padx=8
+
 )
 
 
 
 btn_decrypt = tk.Button(
+
     button_frame,
+
     text="🔓 DEKRIPSI",
+
     width=14,
+
     height=2,
+
     bg="#2E7D32",
+
     fg="white",
+
     font=("Segoe UI",10,"bold"),
+
     command=proses_dekripsi
+
 )
 
 btn_decrypt.grid(
+
     row=0,
+
     column=1,
+
     padx=8
+
 )
 
 
 
 btn_reset = tk.Button(
+
     button_frame,
+
     text="↻ RESET",
+
     width=14,
+
     height=2,
+
     bg="#C62828",
+
     fg="white",
+
     font=("Segoe UI",10,"bold"),
+
     command=reset
+
 )
 
 btn_reset.grid(
+
     row=0,
+
     column=2,
+
     padx=8
+
 )
 
 
@@ -305,32 +414,47 @@ btn_reset.grid(
 # HASIL
 
 tk.Label(
+
     card,
+
     text="Hasil",
+
     font=("Segoe UI",12,"bold"),
+
     bg="white"
+
 ).pack()
 
 
 
 output = tk.Entry(
+
     card,
+
     width=45,
+
     font=("Segoe UI",12)
+
 )
 
 output.pack(pady=10)
 
 
 
-# INFO
+# INFORMASI
 
 info = tk.Label(
+
     window,
+
     text="Plaintext → Enkripsi → Ciphertext\nCiphertext → Dekripsi → Plaintext",
+
     font=("Segoe UI",11),
+
     bg="#D9EEFF",
+
     fg="#555"
+
 )
 
 info.pack()
